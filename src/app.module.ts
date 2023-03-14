@@ -13,6 +13,34 @@ import { HighlightModule } from './apis/menu/highlight/highlight.module';
 import { Highlight } from './apis/menu/highlight/entities/highlight.entity';
 import { HighlightDetailModule } from './apis/menu/highlight/detail/highlight_detail.module';
 import { HighlightDetail } from './apis/menu/highlight/detail/highlight_detail.entity';
+import { EcoModule } from './apis/menu/eco/eco.module';
+import { Eco } from './apis/menu/eco/entities/eco.entity';
+import { DesignModule } from './apis/menu/design/design.module';
+import { Design } from './apis/menu/design/entities/design.entity';
+import { DesignDetail } from './apis/menu/design/detail/design_detail.entity';
+import { DesignDetailModule } from './apis/menu/design/detail/design_detail.module';
+import { Vr } from './apis/menu/vr/vr.entity';
+import { VrDetail } from './apis/menu/vr/detail/vr_detail.entity';
+import { Space } from './apis/menu/space/space.entity';
+import { SpaceDetail } from './apis/menu/space/detail/space_detail.entity';
+import { Convenience } from './apis/menu/convenience/convenience.entity';
+import { ConvenienceDetail } from './apis/menu/convenience/detail/convenience_detail.entity';
+import { Safety } from './apis/menu/safety/safety.entity';
+import { SafetyDetail } from './apis/menu/safety/detail/safety_detail.entity';
+import { Service } from './apis/menu/service/service.entity';
+import { HStation } from './apis/menu/hStation/hStation.entity';
+import { ServiceNetwork } from './apis/menu/serviceNetwork/serviceNetwork.entity';
+import { VrModule } from './apis/menu/vr/vr.module';
+import { VrDetailModule } from './apis/menu/vr/detail/vr_detail.module';
+import { SpaceModule } from './apis/menu/space/space.module';
+import { SpaceDetailModule } from './apis/menu/space/detail/space_detail.module';
+import { ConvenienceModule } from './apis/menu/convenience/convenience.module';
+import { ConvenienceDetailModule } from './apis/menu/convenience/detail/convenience_detail.module';
+import { SafetyModule } from './apis/menu/safety/safety.module';
+import { SafetyDetailModule } from './apis/menu/safety/detail/safety_detail.module';
+import { ServiceModule } from './apis/menu/service/service.module';
+import { HStationModule } from './apis/menu/hStation/hStation.module';
+import { ServiceNetworkModule } from './apis/menu/serviceNetwork/serviceNetwork.module';
 
 @Module({
   imports: [
@@ -27,6 +55,20 @@ import { HighlightDetail } from './apis/menu/highlight/detail/highlight_detail.e
     ModelCategoryModule,
     HighlightModule,
     HighlightDetailModule,
+    EcoModule,
+    DesignModule,
+    DesignDetailModule,
+    VrModule,
+    VrDetailModule,
+    SpaceModule,
+    SpaceDetailModule,
+    ConvenienceModule,
+    ConvenienceDetailModule,
+    SafetyModule,
+    SafetyDetailModule,
+    ServiceModule,
+    HStationModule,
+    ServiceNetworkModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: '127.0.0.1',
@@ -40,6 +82,20 @@ import { HighlightDetail } from './apis/menu/highlight/detail/highlight_detail.e
         ModelCategory,
         Highlight,
         HighlightDetail,
+        Eco,
+        Design,
+        DesignDetail,
+        Vr,
+        VrDetail,
+        Space,
+        SpaceDetail,
+        Convenience,
+        ConvenienceDetail,
+        Safety,
+        SafetyDetail,
+        Service,
+        HStation,
+        ServiceNetwork,
       ],
       synchronize: true,
       logging: true,

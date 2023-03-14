@@ -1,8 +1,17 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { Convenience } from '../menu/convenience/convenience.entity';
+import { Design } from '../menu/design/entities/design.entity';
+import { Eco } from '../menu/eco/entities/eco.entity';
 import { HighlightDetail } from '../menu/highlight/detail/highlight_detail.entity';
 import { Highlight } from '../menu/highlight/entities/highlight.entity';
+import { HStation } from '../menu/hStation/hStation.entity';
+import { Safety } from '../menu/safety/safety.entity';
+import { Service } from '../menu/service/service.entity';
+import { ServiceNetwork } from '../menu/serviceNetwork/serviceNetwork.entity';
+import { Space } from '../menu/space/space.entity';
+import { Vr } from '../menu/vr/vr.entity';
 import { ModelCategory } from '../modelCategory/entities/modelCategory.entity';
 import { User } from '../users/entities/user.entity';
 import { Model } from './entities/model.entity';
@@ -19,13 +28,40 @@ export class ModelService {
     @InjectRepository(Highlight)
     private readonly highlightRepository: Repository<Highlight>,
 
+    @InjectRepository(Eco)
+    private readonly ecoRepository: Repository<Eco>,
+
+    @InjectRepository(Design)
+    private readonly designRepository: Repository<Design>,
+
+    @InjectRepository(Vr)
+    private readonly vrRepository: Repository<Vr>,
+
+    @InjectRepository(Space)
+    private readonly spaceRepository: Repository<Space>,
+
+    @InjectRepository(Convenience)
+    private readonly convenienceRepository: Repository<Convenience>,
+
+    @InjectRepository(Safety)
+    private readonly safetyRepository: Repository<Safety>,
+
+    @InjectRepository(Service)
+    private readonly serviceRepository: Repository<Service>,
+
+    @InjectRepository(HStation)
+    private readonly hStationRepository: Repository<HStation>,
+
+    @InjectRepository(ServiceNetwork)
+    private readonly serviceNetworkRepository: Repository<ServiceNetwork>,
+
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
   ) {}
 
   async findAll() {
     return await this.modelRepository.find({
-      relations: ['modelCategory'], // 어떤 테이블 조인해올지 쓰면됨.
+      relations: ['modelCategory', 'highlight', 'eco', 'design'], // 어떤 테이블 조인해올지 쓰면됨.
     });
   }
 
@@ -37,14 +73,27 @@ export class ModelService {
   }
 
   async create({ createModelInput }) {
-    const { modelCategoryName, highlight, ...model } = createModelInput;
+    const {
+      modelCategoryName,
+      highlight,
+      eco,
+      design,
+      vr,
+      space,
+      convenience,
+      safety,
+      service,
+      hStation,
+      serviceNetwork,
+      ...model
+    } = createModelInput;
 
+    // 모델카테고리 테이블에 저장
     // id 말고 이름으로 받고싶어서 id 찾는 로직 추가
     let result_modelCategory = await this.modelCategoryRepository.findOne({
       where: { name: modelCategoryName },
     });
 
-    // 모델카테고리 테이블에 저장
     // result에는 name뿐만 아니라 id도 담겨있게 됨.
     if (!result_modelCategory) {
       result_modelCategory = await this.modelCategoryRepository.save({
@@ -57,15 +106,68 @@ export class ModelService {
       summary: highlight.summary,
     });
 
+    // 에코
+    const result_eco = await this.ecoRepository.save({
+      summary: eco.summary,
+      img: eco.img,
+    });
+
+    // 디자인
+    const result_design = await this.designRepository.save({
+      summary: design.summary,
+    });
+
+    // Vr
+    const result_vr = await this.vrRepository.save({
+      img: vr.img,
+    });
+
+    // Vr
+    const result_space = await this.spaceRepository.save({
+      summary: space.summary,
+      img: space.img,
+    });
+
+    const result_convenience = await this.convenienceRepository.save({
+      summary: convenience.summary,
+      img: convenience.img,
+    });
+
+    const result_safety = await this.safetyRepository.save({
+      summary: safety.summary,
+      img: safety.img,
+    });
+
+    const result_service = await this.serviceRepository.save({
+      summary: service.summary,
+      img: service.img,
+    });
+
+    const result_hStation = await this.hStationRepository.save({
+      summary: hStation.summary,
+      img: hStation.img,
+    });
+
+    const result_serviceNetwork = await this.serviceNetworkRepository.save({
+      summary: serviceNetwork.summary,
+      img: serviceNetwork.img,
+    });
+
     // 모델 테이블에 저장
     const result2 = await this.modelRepository.save({
       ...model,
       modelCategory: result_modelCategory,
       highlight: result_highlight,
+      eco: result_eco,
+      design: result_design,
+      vr: result_vr,
+      space: result_space,
+      convenience: result_convenience,
+      safety: result_safety,
+      service: result_service,
+      hStation: result_hStation,
+      serviceNetwork: result_serviceNetwork,
     });
-
-    console.log('result_highlight :', result_highlight.id);
-    console.log('result2.id :', result2.id);
 
     return result2;
   }
