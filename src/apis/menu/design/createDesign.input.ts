@@ -4,4 +4,7 @@ import { Field, InputType } from '@nestjs/graphql';
 export class CreateDesignInput {
   @Field(() => String)
   summary: string;
+
+  @Field(() => String)
+  img: string;
 }

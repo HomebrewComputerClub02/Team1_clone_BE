@@ -68,38 +68,38 @@ export class Model {
   @Field(() => Design)
   design: Design;
 
-  @Field(() => Vr)
+  @JoinColumn()
   @OneToOne(() => Vr)
   @Field(() => Vr)
   vr: Vr;
 
-  @Field(() => Space)
+  @JoinColumn()
   @OneToOne(() => Space)
   @Field(() => Space)
   space: Space;
 
-  @Field(() => Convenience)
+  @JoinColumn()
   @OneToOne(() => Convenience)
   @Field(() => Convenience)
   convenience: Convenience;
 
-  @Field(() => Safety)
+  @JoinColumn()
   @OneToOne(() => Safety)
   @Field(() => Safety)
   safety: Safety;
 
   // 얘가 문제 뜸. 뭐지.
-  @Field(() => Service)
+  @JoinColumn()
   @OneToOne(() => Service)
   @Field(() => Service)
   service: Service;
 
-  @Field(() => HStation)
+  @JoinColumn()
   @OneToOne(() => HStation)
   @Field(() => HStation)
   hStation: HStation;
 
-  @Field(() => ServiceNetwork)
+  @JoinColumn()
   @OneToOne(() => ServiceNetwork)
   @Field(() => ServiceNetwork)
   serviceNetwork: ServiceNetwork;

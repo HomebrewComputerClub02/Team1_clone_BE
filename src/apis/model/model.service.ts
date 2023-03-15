@@ -61,7 +61,19 @@ export class ModelService {
 
   async findAll() {
     return await this.modelRepository.find({
-      relations: ['modelCategory', 'highlight', 'eco', 'design'], // 어떤 테이블 조인해올지 쓰면됨.
+      relations: [
+        'modelCategory',
+        'highlight',
+        'eco',
+        'design',
+        'vr',
+        'space',
+        'convenience',
+        'safety',
+        'service',
+        'hStation',
+        'serviceNetwork',
+      ], // 어떤 테이블 조인해올지 쓰면됨.
     });
   }
 
@@ -115,6 +127,7 @@ export class ModelService {
     // 디자인
     const result_design = await this.designRepository.save({
       summary: design.summary,
+      img: design.img,
     });
 
     // Vr

@@ -9,9 +9,16 @@ type User {
   phone: String!
 }
 
+type Convenience {
+  id: String!
+  summary: String!
+  img: String!
+}
+
 type Design {
   id: String!
   summary: String!
+  img: String!
 }
 
 type Eco {
@@ -33,17 +40,6 @@ type HighlightDetail {
   highlight: Highlight!
 }
 
-type ModelCategory {
-  id: String!
-  name: String!
-}
-
-type Convenience {
-  id: String!
-  summary: String!
-  img: String!
-}
-
 type HStation {
   id: String!
   summary: String!
@@ -51,6 +47,12 @@ type HStation {
 }
 
 type Safety {
+  id: String!
+  summary: String!
+  img: String!
+}
+
+type Service {
   id: String!
   summary: String!
   img: String!
@@ -72,6 +74,11 @@ type Vr {
   img: String!
 }
 
+type ModelCategory {
+  id: String!
+  name: String!
+}
+
 type Model {
   id: String!
   name_ko: String!
@@ -87,6 +94,7 @@ type Model {
   space: Space!
   convenience: Convenience!
   safety: Safety!
+  service: Service!
   hStation: HStation!
   serviceNetwork: ServiceNetwork!
 }
@@ -127,12 +135,6 @@ type SafetyDetail {
   summary: String!
   img: String!
   safety: Safety!
-}
-
-type Service {
-  id: String!
-  summary: String!
-  img: String!
 }
 
 type Query {
@@ -191,10 +193,11 @@ input CreateEcoInput {
 
 input CreateDesignInput {
   summary: String!
+  img: String!
 }
 
 input CreateVrInput {
-  summary: String!
+  img: String!
 }
 
 input CreateSpaceInput {
