@@ -15,10 +15,25 @@ type Convenience {
   img: String!
 }
 
+type ConvenienceDetail {
+  id: String!
+  name: String!
+  summary: String!
+  img: String!
+  convenience: Convenience!
+}
+
 type Design {
   id: String!
   summary: String!
   img: String!
+}
+
+type DesignDetail {
+  id: String!
+  name: String!
+  img: String!
+  design: Design!
 }
 
 type Eco {
@@ -52,6 +67,14 @@ type Safety {
   img: String!
 }
 
+type SafetyDetail {
+  id: String!
+  name: String!
+  summary: String!
+  img: String!
+  safety: Safety!
+}
+
 type Service {
   id: String!
   summary: String!
@@ -67,11 +90,27 @@ type ServiceNetwork {
 type Space {
   id: String!
   img: String!
+  summary: String!
+}
+
+type SpaceDetail {
+  id: String!
+  name: String!
+  summary: String!
+  img: String!
+  space: Space!
 }
 
 type Vr {
   id: String!
   img: String!
+}
+
+type VrDetail {
+  id: String!
+  color_name: String!
+  color_code: String!
+  vr: Vr!
 }
 
 type ModelCategory {
@@ -99,48 +138,36 @@ type Model {
   serviceNetwork: ServiceNetwork!
 }
 
-type DesignDetail {
+type ModelOutput {
   id: String!
-  name: String!
-  img: String!
+  name_ko: String!
+  name_en: String!
+  description: String!
+  price: Int!
+  main_img: String!
+  modelCategory: ModelCategory!
+  highlight: Highlight!
+  eco: Eco!
   design: Design!
-}
-
-type VrDetail {
-  id: String!
-  color_name: String!
-  color_code: String!
   vr: Vr!
-}
-
-type SpaceDetail {
-  id: String!
-  name: String!
-  summary: String!
-  img: String!
   space: Space!
-}
-
-type ConvenienceDetail {
-  id: String!
-  name: String!
-  summary: String!
-  img: String!
   convenience: Convenience!
-}
-
-type SafetyDetail {
-  id: String!
-  name: String!
-  summary: String!
-  img: String!
   safety: Safety!
+  service: Service!
+  hStation: HStation!
+  serviceNetwork: ServiceNetwork!
+  highlightDetails: [HighlightDetail!]!
+  designDetails: [DesignDetail!]!
+  vrDetails: [VrDetail!]!
+  spaceDetails: [SpaceDetail!]!
+  convenienceDetails: [ConvenienceDetail!]!
+  safetyDetails: [SafetyDetail!]!
 }
 
 type Query {
   fetchUser: User!
   fetchModels: [Model!]!
-  fetchModel(modelId: String!): Model!
+  fetchModel(modelId: String!): ModelOutput!
   fetchHighlights: [Eco!]!
   fetchDesigns: [Design!]!
   fetchVrs: [Vr!]!

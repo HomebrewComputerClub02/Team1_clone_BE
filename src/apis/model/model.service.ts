@@ -2,15 +2,20 @@ import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Convenience } from '../menu/convenience/convenience.entity';
+import { ConvenienceDetail } from '../menu/convenience/detail/convenience_detail.entity';
+import { DesignDetail } from '../menu/design/detail/design_detail.entity';
 import { Design } from '../menu/design/entities/design.entity';
 import { Eco } from '../menu/eco/entities/eco.entity';
 import { HighlightDetail } from '../menu/highlight/detail/highlight_detail.entity';
 import { Highlight } from '../menu/highlight/entities/highlight.entity';
 import { HStation } from '../menu/hStation/hStation.entity';
+import { SafetyDetail } from '../menu/safety/detail/safety_detail.entity';
 import { Safety } from '../menu/safety/safety.entity';
 import { Service } from '../menu/service/service.entity';
 import { ServiceNetwork } from '../menu/serviceNetwork/serviceNetwork.entity';
+import { SpaceDetail } from '../menu/space/detail/space_detail.entity';
 import { Space } from '../menu/space/space.entity';
+import { VrDetail } from '../menu/vr/detail/vr_detail.entity';
 import { Vr } from '../menu/vr/vr.entity';
 import { ModelCategory } from '../modelCategory/entities/modelCategory.entity';
 import { User } from '../users/entities/user.entity';
@@ -55,6 +60,24 @@ export class ModelService {
     @InjectRepository(ServiceNetwork)
     private readonly serviceNetworkRepository: Repository<ServiceNetwork>,
 
+    @InjectRepository(HighlightDetail)
+    private readonly highlightDetailRepository: Repository<HighlightDetail>,
+
+    @InjectRepository(DesignDetail)
+    private readonly designDetailRepository: Repository<DesignDetail>,
+
+    @InjectRepository(VrDetail)
+    private readonly vrDetailRepository: Repository<VrDetail>,
+
+    @InjectRepository(SpaceDetail)
+    private readonly spaceDetailRepository: Repository<SpaceDetail>,
+
+    @InjectRepository(ConvenienceDetail)
+    private readonly convenienceDetailRepository: Repository<ConvenienceDetail>,
+
+    @InjectRepository(SafetyDetail)
+    private readonly safetyDetailRepository: Repository<SafetyDetail>,
+
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
   ) {}
@@ -78,10 +101,70 @@ export class ModelService {
   }
 
   async findOne({ modelId }) {
-    return await this.modelRepository.findOne({
+    const result_model = await this.modelRepository.findOne({
       where: { id: modelId },
-      relations: ['modelCategory'], // 어떤 테이블 조인해올지 쓰면됨.
+      relations: [
+        'modelCategory',
+        'highlight',
+        'eco',
+        'design',
+        'vr',
+        'space',
+        'convenience',
+        'safety',
+        'service',
+        'hStation',
+        'serviceNetwork',
+      ], // 어떤 테이블 조인해올지 쓰면됨.
     });
+
+    // highlight 디테일
+    const highlight_id = result_model.highlight.id;
+    const highlightDetails = await this.highlightDetailRepository.find({
+      where: { highlight: { id: highlight_id } },
+    });
+
+    // design 디테일
+    const design_id = result_model.design.id;
+    const designDetails = await this.designDetailRepository.find({
+      where: { design: { id: design_id } },
+    });
+
+    // vr 디테일
+    const vr_id = result_model.vr.id;
+    const vrDetails = await this.vrDetailRepository.find({
+      where: { vr: { id: vr_id } },
+    });
+
+    // space 디테일
+    const space_id = result_model.space.id;
+    const spaceDetails = await this.spaceDetailRepository.find({
+      where: { space: { id: space_id } },
+    });
+
+    // convenience 디테일
+    const convenience_id = result_model.convenience.id;
+    const convenienceDetails = await this.convenienceDetailRepository.find({
+      where: { convenience: { id: convenience_id } },
+    });
+
+    // safety 디테일
+    const safety_id = result_model.safety.id;
+    const safetyDetails = await this.safetyDetailRepository.find({
+      where: { safety: { id: safety_id } },
+    });
+
+    const result_final = {
+      ...result_model,
+      highlightDetails,
+      designDetails,
+      vrDetails,
+      spaceDetails,
+      convenienceDetails,
+      safetyDetails,
+    };
+
+    return result_final;
   }
 
   async create({ createModelInput }) {
@@ -116,6 +199,10 @@ export class ModelService {
     // 하이라이트
     const result_highlight = await this.highlightRepository.save({
       summary: highlight.summary,
+    });
+
+    const result_highlightDetail = await this.highlightDetailRepository.find({
+      where: { id: result_highlight.id },
     });
 
     // 에코

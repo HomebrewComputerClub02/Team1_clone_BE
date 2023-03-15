@@ -1,5 +1,6 @@
 import { Args, Mutation, Resolver, Query } from '@nestjs/graphql';
 import { CreateModelInput } from './dto/createModel.input';
+import { ModelOutput } from './dto/model.output';
 import { Model } from './entities/model.entity';
 import { ModelService } from './model.service';
 
@@ -12,8 +13,10 @@ export class ModelResolver {
     return this.modelService.findAll();
   }
 
-  @Query(() => Model)
-  fetchModel(@Args('modelId') modelId: string) {
+  @Query(() => ModelOutput)
+  fetchModel(
+    @Args('modelId') modelId: string, //
+  ) {
     return this.modelService.findOne({ modelId });
   }
 

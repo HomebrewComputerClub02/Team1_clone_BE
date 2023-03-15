@@ -5,10 +5,14 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 @ObjectType()
 export class Space {
   @PrimaryGeneratedColumn('increment')
-  @Field(() => String)
+  @Field(() => String) //
   id: string;
 
   @Column()
   @Field(() => String)
   img: string;
+
+  @Column()
+  @Field(() => String)
+  summary: string;
 }
