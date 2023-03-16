@@ -41,6 +41,7 @@ import { SafetyDetailModule } from './apis/menu/safety/detail/safety_detail.modu
 import { ServiceModule } from './apis/menu/service/service.module';
 import { HStationModule } from './apis/menu/hStation/hStation.module';
 import { ServiceNetworkModule } from './apis/menu/serviceNetwork/serviceNetwork.module';
+import { AuthModule } from './apis/auth/auth.module';
 
 @Module({
   imports: [
@@ -50,6 +51,7 @@ import { ServiceNetworkModule } from './apis/menu/serviceNetwork/serviceNetwork.
       autoSchemaFile: 'src/commons/graphql/schema.gql',
       context: ({ req, res }) => ({ req, res }),
     }),
+    AuthModule,
     UserModule, //
     ModelModule,
     ModelCategoryModule,

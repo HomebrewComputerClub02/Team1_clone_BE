@@ -10,6 +10,13 @@ export class UserService {
     private readonly userRepository: Repository<User>,
   ) {}
 
+  async findOne({ email }) {
+    const user = await this.userRepository.findOne({
+      where: { email },
+    });
+    return user;
+  }
+
   async create({ email, name, phone, hashedPassword, hashedSimplePw }) {
     // 이메일 중복 체크
     const userEmail = await this.userRepository.findOne({ where: { email } });

@@ -28,7 +28,7 @@ export class User {
   @Column()
   //   @Field(() => String)
   simplePw: string;
-  //
+
   // @ManyToMany(() => Model, (models) => models.users)
   // @Field(() => [Model])
   // models: Model[];
