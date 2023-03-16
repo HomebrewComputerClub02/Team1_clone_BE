@@ -8,3 +8,10 @@ export class GqlAuthAccessGuard extends AuthGuard('accessGuard') {
     return ctx.getContext().req;
   }
 }
+
+export class GqlAuthRefreshGuard extends AuthGuard('refreshGuard') {
+  getRequest(context: ExecutionContext) {
+    const ctx = GqlExecutionContext.create(context);
+    return ctx.getContext().req;
+  }
+}

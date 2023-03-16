@@ -78,6 +78,7 @@ import { AuthModule } from './apis/auth/auth.module';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: 'project1',
+
       entities: [
         User, //
         Model,

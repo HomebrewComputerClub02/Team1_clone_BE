@@ -2,7 +2,10 @@ import { UnprocessableEntityException } from '@nestjs/common';
 import { Args, Context, Mutation, Resolver } from '@nestjs/graphql';
 import { UserService } from '../users/user.service';
 import { AuthService } from './auth.service';
+import { UseGuards } from '@nestjs/common/decorators';
 import * as bcrypt from 'bcrypt';
+import { GqlAuthRefreshGuard } from 'src/commons/auth/gql-auth.guard';
+import { CurrentUser } from 'src/commons/auth/gql-user.param';
 
 @Resolver()
 export class AuthResolver {
@@ -11,6 +14,7 @@ export class AuthResolver {
     private readonly userService: UserService,
   ) {}
 
+  // 로그인
   @Mutation(() => String)
   async login(
     @Args('email') email: string, //
@@ -29,7 +33,19 @@ export class AuthResolver {
     if (!isAuth) throw new UnprocessableEntityException('비밀번호 다름');
 
     // 유저 로그인 성공시
+    // refreshToken 쏴주기
+    this.authService.setRefreshToken({ user, res: context.res });
+
     // accessToken 쏴주기
     return this.authService.getAccessToken({ user });
+  }
+
+  // accessToken 재발급
+  @UseGuards(GqlAuthRefreshGuard)
+  @Mutation(() => String)
+  restoreAccessToken(
+    @CurrentUser() currentUser: any, //
+  ) {
+    return this.authService.getAccessToken({ user: currentUser });
   }
 }
