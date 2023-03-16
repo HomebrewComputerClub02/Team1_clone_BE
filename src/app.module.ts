@@ -42,6 +42,8 @@ import { ServiceModule } from './apis/menu/service/service.module';
 import { HStationModule } from './apis/menu/hStation/hStation.module';
 import { ServiceNetworkModule } from './apis/menu/serviceNetwork/serviceNetwork.module';
 import { AuthModule } from './apis/auth/auth.module';
+import { PhoneModule } from './apis/users/phone/phone.module';
+import { Token } from './apis/users/phone/token.entity';
 
 @Module({
   imports: [
@@ -71,6 +73,7 @@ import { AuthModule } from './apis/auth/auth.module';
     ServiceModule,
     HStationModule,
     ServiceNetworkModule,
+    PhoneModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: '127.0.0.1',
@@ -78,7 +81,6 @@ import { AuthModule } from './apis/auth/auth.module';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: 'project1',
-
       entities: [
         User, //
         Model,
@@ -99,6 +101,7 @@ import { AuthModule } from './apis/auth/auth.module';
         Service,
         HStation,
         ServiceNetwork,
+        Token,
       ],
       synchronize: true,
       logging: true,
