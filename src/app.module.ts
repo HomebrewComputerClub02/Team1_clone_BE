@@ -44,6 +44,7 @@ import { ServiceNetworkModule } from './apis/menu/serviceNetwork/serviceNetwork.
 import { AuthModule } from './apis/auth/auth.module';
 import { PhoneModule } from './apis/users/phone/phone.module';
 import { Token } from './apis/users/phone/token.entity';
+import { EmailModule } from './apis/users/email/email.module';
 
 @Module({
   imports: [
@@ -74,6 +75,7 @@ import { Token } from './apis/users/phone/token.entity';
     HStationModule,
     ServiceNetworkModule,
     PhoneModule,
+    EmailModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: '127.0.0.1',

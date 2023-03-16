@@ -8,10 +8,10 @@ export class PhoneResolver {
   ) {}
 
   @Mutation(() => String)
-  async SendSMS(
+  async sendSMS(
     @Args('phone') phone: string, //
   ) {
-    const validation = this.phoneService.checkValidation({ phone });
+    const validation = this.phoneService.checkPhoneValidation({ phone });
     const token = this.phoneService.getToken();
     if (!validation) return '전화번호를 제대로 입력(10자리 or 11자리)';
 
@@ -20,7 +20,7 @@ export class PhoneResolver {
   }
 
   @Mutation(() => String)
-  async CheckSMS(
+  async checkSMS(
     @Args('phone') phone: string, //
     @Args('token') token: string,
   ) {

@@ -12,7 +12,7 @@ export class PhoneService {
   ) {}
 
   // 핸드폰 번호가 똑바로 온건지.
-  checkValidation({ phone }) {
+  checkPhoneValidation({ phone }) {
     if (phone.length !== 10 && phone.length !== 11) {
       console.log('에러 발생!!! 핸드폰 번호를 제대로 입력해 주세요!!!');
       return false;

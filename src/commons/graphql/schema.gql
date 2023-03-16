@@ -195,8 +195,9 @@ type Mutation {
   createSpaceDetail(createSpaceDetailInput: CreateSpaceDetailInput!): SpaceDetail!
   createConvenienceDetail(createConvenienceDetailInput: CreateConvenienceDetailInput!): ConvenienceDetail!
   createSafetyDetail(createSafetyDetailInput: CreateSafetyDetailInput!): SafetyDetail!
-  SendSMS(phone: String!): String!
-  CheckSMS(phone: String!, token: String!): String!
+  sendSMS(phone: String!): String!
+  checkSMS(phone: String!, token: String!): String!
+  sendEmail(email: String!): String!
 }
 
 input CreateModelInput {
