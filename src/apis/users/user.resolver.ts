@@ -6,10 +6,13 @@ import { UseGuards } from '@nestjs/common/decorators';
 import { AuthGuard } from '@nestjs/passport';
 import { GqlAuthAccessGuard } from 'src/commons/auth/gql-auth.guard';
 import { CurrentUser, fetchUser } from 'src/commons/auth/gql-user.param';
+import { PhoneService } from './phone/phone.service';
 
 @Resolver()
 export class UserResolver {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService, //
+  ) {}
 
   @UseGuards(GqlAuthAccessGuard)
   @Query(() => fetchUser)
@@ -38,5 +41,15 @@ export class UserResolver {
       hashedPassword,
       hashedSimplePw,
     });
+  }
+
+  @Mutation(() => String)
+  async findId(
+    @Args('phone') phone: string, //
+  ) {
+    // phone으로 가입된 아이디가 있나 확인.
+    const result = await this.userService.findId({ phone });
+    if (!result) return '가입된 아이디 없음.';
+    return result;
   }
 }
