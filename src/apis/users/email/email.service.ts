@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import * as nodemailer from 'nodemailer';
+import { getToken } from 'src/commons/utils';
+import { PhoneService } from '../phone/phone.service';
 
 @Injectable()
 export class EmailService {
@@ -12,15 +14,15 @@ export class EmailService {
 
   async sendEmail({ email }) {
     // 이메일 내용
-    const test = 'test';
+    const token = getToken();
+    const url = 'http://localhost:3000';
     const emailTemplate = `
-              <html>
-                  <body>
-                      <h1>이메일 내용을 이렇게 html 형식으로</h1>
+                      <h1>현대차 회원가입 인증메일</h1>
                       <hr />
-                      <div>테스트: ${test}</div>
-                  </body>
-              </html>`;
+                      <div>인증번호: ${token}</div>
+                      <div>인증번호를 입력하세요.</div>
+                      <a href="${url}/${token}">리다이렉션 url : ${url}/${token}</a>
+              `;
 
     // 이메일 보내기
     try {
@@ -35,7 +37,7 @@ export class EmailService {
       await transporter.sendMail({
         from: 'coghks0426@gmail.com',
         to: email,
-        subject: '제목을 입력하면 됨.',
+        subject: '[제목 입력란]안녕하세요. 인증요청입니다.',
         html: emailTemplate,
       });
       return '이메일 전송 완료';

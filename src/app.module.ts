@@ -43,7 +43,7 @@ import { HStationModule } from './apis/menu/hStation/hStation.module';
 import { ServiceNetworkModule } from './apis/menu/serviceNetwork/serviceNetwork.module';
 import { AuthModule } from './apis/auth/auth.module';
 import { PhoneModule } from './apis/users/phone/phone.module';
-import { Token } from './apis/users/phone/token.entity';
+import { PhoneToken } from './apis/users/phone/phoneToken.entity';
 import { EmailModule } from './apis/users/email/email.module';
 
 @Module({
@@ -103,7 +103,7 @@ import { EmailModule } from './apis/users/email/email.module';
         Service,
         HStation,
         ServiceNetwork,
-        Token,
+        PhoneToken,
       ],
       synchronize: true,
       logging: true,

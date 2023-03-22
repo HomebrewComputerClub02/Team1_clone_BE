@@ -1,14 +1,14 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Token } from './token.entity';
+import { PhoneToken } from './phoneToken.entity';
 const coolsms = require('coolsms-node-sdk').default;
 
 @Injectable()
 export class PhoneService {
   constructor(
-    @InjectRepository(Token)
-    private readonly tokenRepository: Repository<Token>,
+    @InjectRepository(PhoneToken)
+    private readonly phoneTokenRepository: Repository<PhoneToken>,
   ) {}
 
   // 핸드폰 번호가 똑바로 온건지.
@@ -19,16 +19,6 @@ export class PhoneService {
     } else {
       return true; // 검증 통과
     }
-  }
-
-  // 여섯자리 랜덤한 숫자 (string)
-  getToken() {
-    const count = 6;
-    const token = String(Math.floor(Math.random() * 10 ** count)).padStart(
-      count,
-      '0',
-    );
-    return token;
   }
 
   async sendTokenToSMS({ phone, token }) {
@@ -47,20 +37,20 @@ export class PhoneService {
     // phone, token 값 저장해놓기
     // db 사용, 추후 캐시메모리로 바꿔보기
     // phone 같은거 있으면, 업데이트하고, 아니면 새로 만들기.
-    const result_token = await this.tokenRepository.findOne({
+    const result_token = await this.phoneTokenRepository.findOne({
       where: { phone },
     });
 
     if (result_token) {
       // db에 있는 기존 번호 토큰 업데이트
-      const result = await this.tokenRepository.save({
+      const result = await this.phoneTokenRepository.save({
         id: result_token.id,
         phone,
         token,
       });
     } else {
       // 새로운 번호 토큰 저장
-      const result = await this.tokenRepository.save({
+      const result = await this.phoneTokenRepository.save({
         phone,
         token,
       });
@@ -68,7 +58,7 @@ export class PhoneService {
   }
 
   async checkToken({ phone, token }) {
-    const result_phone = await this.tokenRepository.findOne({
+    const result_phone = await this.phoneTokenRepository.findOne({
       where: { phone },
     });
     if (!result_phone) return '해당 휴대폰 토큰정보 없음.';

@@ -52,4 +52,7 @@ export class UserResolver {
     if (!result) return '가입된 아이디 없음.';
     return result;
   }
+
+  @Mutation(() => String)
+  async resetPasswordByEmail() {}
 }

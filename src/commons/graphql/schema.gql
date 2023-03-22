@@ -189,6 +189,7 @@ type Mutation {
   restoreAccessToken: String!
   createUser(email: String!, password: String!, name: String!, phone: String!, simplePw: String!): User!
   findId(phone: String!): String!
+  resetPasswordByEmail: String!
   createModel(createModelInput: CreateModelInput!): Model!
   createHighlightDetail(createHighlightDetailInput: CreateHighlightDetailInput!): HighlightDetail!
   createDesignDetail(createDesignDetailInput: CreateDesignDetailInput!): DesignDetail!

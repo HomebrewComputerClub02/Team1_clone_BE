@@ -3,7 +3,7 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 @ObjectType()
-export class Token {
+export class PhoneToken {
   @PrimaryGeneratedColumn('increment')
   @Field(() => String)
   id: string;
