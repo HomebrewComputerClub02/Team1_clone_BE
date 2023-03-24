@@ -6,11 +6,11 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Design } from '../design.entity';
+import { DesignDetail } from '../design_detail.entity';
 
 @Entity()
 @ObjectType()
-export class DesignDetail {
+export class DesignDetailDetail {
   @PrimaryGeneratedColumn('increment')
   @Field(() => String)
   id: string;
@@ -19,12 +19,16 @@ export class DesignDetail {
   @Field(() => String)
   name: string;
 
+  @Column({ nullable: true })
+  @Field(() => String, { nullable: true })
+  summary: string;
+
   @Column()
   @Field(() => String)
   img: string;
 
   @JoinColumn()
-  @ManyToOne(() => Design)
-  @Field(() => Design)
-  design: Design;
+  @ManyToOne(() => DesignDetail)
+  @Field(() => DesignDetail)
+  designDetail: DesignDetail;
 }

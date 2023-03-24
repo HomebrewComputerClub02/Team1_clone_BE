@@ -10,9 +10,5 @@ export class Space {
 
   @Column()
   @Field(() => String)
-  img: string;
-
-  @Column()
-  @Field(() => String)
   summary: string;
 }

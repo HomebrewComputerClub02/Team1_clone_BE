@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { Convenience } from '../menu/convenience/convenience.entity';
 import { ConvenienceDetail } from '../menu/convenience/detail/convenience_detail.entity';
 import { DesignDetail } from '../menu/design/detail/design_detail.entity';
-import { Design } from '../menu/design/entities/design.entity';
+import { Design } from '../menu/design/design.entity';
 import { Eco } from '../menu/eco/entities/eco.entity';
 import { HighlightDetail } from '../menu/highlight/detail/highlight_detail.entity';
 import { Highlight } from '../menu/highlight/entities/highlight.entity';
@@ -20,6 +20,7 @@ import { Vr } from '../menu/vr/vr.entity';
 import { ModelCategory } from '../modelCategory/entities/modelCategory.entity';
 import { User } from '../users/entities/user.entity';
 import { Model } from './entities/model.entity';
+import { DesignDetailDetail } from '../menu/design/detail/detail_detail/design_detail_detail.entity';
 
 @Injectable()
 export class ModelService {
@@ -66,6 +67,9 @@ export class ModelService {
     @InjectRepository(DesignDetail)
     private readonly designDetailRepository: Repository<DesignDetail>,
 
+    @InjectRepository(DesignDetailDetail)
+    private readonly designDetailDetailRepository: Repository<DesignDetailDetail>,
+
     @InjectRepository(VrDetail)
     private readonly vrDetailRepository: Repository<VrDetail>,
 
@@ -82,6 +86,8 @@ export class ModelService {
     private readonly userRepository: Repository<User>,
   ) {}
 
+  // ----------------------------------------
+  // fetchModel
   async findAll() {
     return await this.modelRepository.find({
       relations: [
@@ -100,6 +106,8 @@ export class ModelService {
     });
   }
 
+  // ----------------------------------------
+  // fetchModel
   async findOne({ modelId }) {
     const result_model = await this.modelRepository.findOne({
       where: { id: modelId },
@@ -128,6 +136,18 @@ export class ModelService {
     const design_id = result_model.design.id;
     const designDetails = await this.designDetailRepository.find({
       where: { design: { id: design_id } },
+      relations: ['design'],
+    });
+
+    // design 디테일 디테일
+    // console.log(designDetails);
+    let designDetailDetails = [];
+    designDetails.forEach(async (designDetail) => {
+      const designDetailDetail = await this.designDetailDetailRepository.find({
+        where: { designDetail: { id: designDetail.id } },
+        relations: ['designDetail'],
+      });
+      designDetailDetails.push(designDetailDetail);
     });
 
     // vr 디테일
@@ -154,10 +174,16 @@ export class ModelService {
       where: { safety: { id: safety_id } },
     });
 
+    // console.log('designDetails : ', designDetails);
+    // console.log('designDetailDetails : ', designDetailDetails);
+
+    console.log('desginDetailDetails : ', designDetailDetails);
+
     const result_final = {
       ...result_model,
       highlightDetails,
       designDetails,
+      designDetailDetails,
       vrDetails,
       spaceDetails,
       convenienceDetails,
@@ -167,6 +193,8 @@ export class ModelService {
     return result_final;
   }
 
+  // ----------------------------------------
+  // createModel
   async create({ createModelInput }) {
     const {
       modelCategoryName,

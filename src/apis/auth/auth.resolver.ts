@@ -33,7 +33,7 @@ export class AuthResolver {
     if (!isAuth) throw new UnprocessableEntityException('비밀번호 다름');
 
     // 유저 로그인 성공시
-    // refreshToken 쏴주기
+    // refreshToken 쿠키에 박아주기
     this.authService.setRefreshToken({ user, res: context.res });
 
     // accessToken 쏴주기

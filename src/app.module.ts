@@ -16,7 +16,7 @@ import { HighlightDetail } from './apis/menu/highlight/detail/highlight_detail.e
 import { EcoModule } from './apis/menu/eco/eco.module';
 import { Eco } from './apis/menu/eco/entities/eco.entity';
 import { DesignModule } from './apis/menu/design/design.module';
-import { Design } from './apis/menu/design/entities/design.entity';
+import { Design } from './apis/menu/design/design.entity';
 import { DesignDetail } from './apis/menu/design/detail/design_detail.entity';
 import { DesignDetailModule } from './apis/menu/design/detail/design_detail.module';
 import { Vr } from './apis/menu/vr/vr.entity';
@@ -45,6 +45,8 @@ import { AuthModule } from './apis/auth/auth.module';
 import { PhoneModule } from './apis/users/phone/phone.module';
 import { PhoneToken } from './apis/users/phone/phoneToken.entity';
 import { EmailModule } from './apis/users/email/email.module';
+import { DesignDetailDetailModule } from './apis/menu/design/detail/detail_detail/design_detail_detail.module';
+import { DesignDetailDetail } from './apis/menu/design/detail/detail_detail/design_detail_detail.entity';
 
 @Module({
   imports: [
@@ -52,6 +54,10 @@ import { EmailModule } from './apis/users/email/email.module';
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: 'src/commons/graphql/schema.gql',
+      cors: {
+        origin: 'http://localhost:3000',
+        credentials: true,
+      },
       context: ({ req, res }) => ({ req, res }),
     }),
     AuthModule,
@@ -63,6 +69,7 @@ import { EmailModule } from './apis/users/email/email.module';
     EcoModule,
     DesignModule,
     DesignDetailModule,
+    DesignDetailDetailModule,
     VrModule,
     VrDetailModule,
     SpaceModule,
@@ -92,6 +99,7 @@ import { EmailModule } from './apis/users/email/email.module';
         Eco,
         Design,
         DesignDetail,
+        DesignDetailDetail,
         Vr,
         VrDetail,
         Space,
@@ -106,7 +114,7 @@ import { EmailModule } from './apis/users/email/email.module';
         PhoneToken,
       ],
       synchronize: true,
-      logging: true,
+      // logging: true,
     }),
   ],
 })

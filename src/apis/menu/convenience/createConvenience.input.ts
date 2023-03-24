@@ -4,7 +4,4 @@ import { Field, InputType } from '@nestjs/graphql';
 export class CreateConvenienceInput {
   @Field(() => String)
   summary: string;
-
-  @Field(() => String)
-  img: string;
 }

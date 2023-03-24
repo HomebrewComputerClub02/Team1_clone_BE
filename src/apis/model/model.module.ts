@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Convenience } from '../menu/convenience/convenience.entity';
 import { ConvenienceDetail } from '../menu/convenience/detail/convenience_detail.entity';
 import { DesignDetail } from '../menu/design/detail/design_detail.entity';
-import { Design } from '../menu/design/entities/design.entity';
+import { Design } from '../menu/design/design.entity';
 import { Eco } from '../menu/eco/entities/eco.entity';
 import { HighlightDetail } from '../menu/highlight/detail/highlight_detail.entity';
 import { Highlight } from '../menu/highlight/entities/highlight.entity';
@@ -21,6 +21,7 @@ import { User } from '../users/entities/user.entity';
 import { Model } from './entities/model.entity';
 import { ModelResolver } from './model.resolver';
 import { ModelService } from './model.service';
+import { DesignDetailDetail } from '../menu/design/detail/detail_detail/design_detail_detail.entity';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { ModelService } from './model.service';
       Eco,
       Design,
       DesignDetail,
+      DesignDetailDetail,
       Vr,
       VrDetail,
       Space,

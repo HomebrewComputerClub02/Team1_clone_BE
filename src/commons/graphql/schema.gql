@@ -17,7 +17,6 @@ type fetchUser {
 type Convenience {
   id: String!
   summary: String!
-  img: String!
 }
 
 type ConvenienceDetail {
@@ -31,7 +30,6 @@ type ConvenienceDetail {
 type Design {
   id: String!
   summary: String!
-  img: String!
 }
 
 type DesignDetail {
@@ -94,7 +92,6 @@ type ServiceNetwork {
 
 type Space {
   id: String!
-  img: String!
   summary: String!
 }
 
@@ -143,6 +140,14 @@ type Model {
   serviceNetwork: ServiceNetwork!
 }
 
+type DesignDetailDetail {
+  id: String!
+  name: String!
+  summary: String
+  img: String!
+  designDetail: DesignDetail!
+}
+
 type ModelOutput {
   id: String!
   name_ko: String!
@@ -163,6 +168,7 @@ type ModelOutput {
   serviceNetwork: ServiceNetwork!
   highlightDetails: [HighlightDetail!]!
   designDetails: [DesignDetail!]!
+  designDetailDetails: [[DesignDetailDetail!]!]!
   vrDetails: [VrDetail!]!
   spaceDetails: [SpaceDetail!]!
   convenienceDetails: [ConvenienceDetail!]!
@@ -193,6 +199,7 @@ type Mutation {
   createModel(createModelInput: CreateModelInput!): Model!
   createHighlightDetail(createHighlightDetailInput: CreateHighlightDetailInput!): HighlightDetail!
   createDesignDetail(createDesignDetailInput: CreateDesignDetailInput!): DesignDetail!
+  createDesignDetailDetail(createDesignDetailDetailInput: CreateDesignDetailDetailInput!): DesignDetailDetail!
   createVrDetail(createVrDetailInput: CreateVrDetailInput!): VrDetail!
   createSpaceDetail(createSpaceDetailInput: CreateSpaceDetailInput!): SpaceDetail!
   createConvenienceDetail(createConvenienceDetailInput: CreateConvenienceDetailInput!): ConvenienceDetail!
@@ -232,7 +239,6 @@ input CreateEcoInput {
 
 input CreateDesignInput {
   summary: String!
-  img: String!
 }
 
 input CreateVrInput {
@@ -241,12 +247,10 @@ input CreateVrInput {
 
 input CreateSpaceInput {
   summary: String!
-  img: String!
 }
 
 input CreateConvenienceInput {
   summary: String!
-  img: String!
 }
 
 input CreateSafetyInput {
@@ -280,6 +284,13 @@ input CreateDesignDetailInput {
   name: String!
   img: String!
   design_id: String!
+}
+
+input CreateDesignDetailDetailInput {
+  name: String!
+  summary: String
+  img: String!
+  design_detail_id: String!
 }
 
 input CreateVrDetailInput {

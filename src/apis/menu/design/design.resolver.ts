@@ -1,6 +1,6 @@
 import { Query, Resolver } from '@nestjs/graphql';
 import { DesignService } from './design.service';
-import { Design } from './entities/design.entity';
+import { Design } from './design.entity';
 
 @Resolver()
 export class DesignResolver {

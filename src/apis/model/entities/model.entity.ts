@@ -1,6 +1,6 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { Convenience } from 'src/apis/menu/convenience/convenience.entity';
-import { Design } from 'src/apis/menu/design/entities/design.entity';
+import { Design } from 'src/apis/menu/design/design.entity';
 import { Eco } from 'src/apis/menu/eco/entities/eco.entity';
 import { Highlight } from 'src/apis/menu/highlight/entities/highlight.entity';
 import { HStation } from 'src/apis/menu/hStation/hStation.entity';
@@ -88,7 +88,6 @@ export class Model {
   @Field(() => Safety)
   safety: Safety;
 
-  // 얘가 문제 뜸. 뭐지.
   @JoinColumn()
   @OneToOne(() => Service)
   @Field(() => Service)

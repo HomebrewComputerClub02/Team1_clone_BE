@@ -10,7 +10,7 @@ export class AuthService {
   getAccessToken({ user }) {
     return this.jwtService.sign(
       { email: user.email, sub: user.id }, //
-      { secret: 'myAccessKey', expiresIn: '20s' },
+      { secret: 'myAccessKey', expiresIn: '30m' },
     );
   }
 
@@ -21,7 +21,11 @@ export class AuthService {
     );
 
     // 개발환경
-    res.setHeader('Set-Cookie', `refreshToken=${refreshToken}; path=/;`);
+    res.setHeader(
+      'Set-Cookie',
+
+      `refreshToken=${refreshToken}; path=/; httpOnly;`,
+    );
 
     // // 배포환경
     // res.setHeader('Access-Control-Allow-Origin', 'http://cocobol.site');
