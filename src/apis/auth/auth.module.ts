@@ -3,7 +3,7 @@ import { JwtModule } from '@nestjs/jwt/dist';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtRefreshStrategy } from 'src/commons/auth/jwt-refresh.strategy';
 import { JwtGoogleStrategy } from 'src/commons/auth/jwt-social-google.strategy';
-import { User } from '../users/entities/user.entity';
+import { User } from '../users/user.entity';
 import { UserService } from '../users/user.service';
 import { AuthController } from './auth.controller';
 import { AuthResolver } from './auth.resolver';

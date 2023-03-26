@@ -1,12 +1,12 @@
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './apis/users/entities/user.entity';
+import { User } from './apis/users/user.entity';
 import { UserModule } from './apis/users/user.module';
 import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ModelModule } from './apis/model/model.module';
-import { Model } from './apis/model/entities/model.entity';
+import { Model } from './apis/model/model.entity';
 import { ModelCategoryModule } from './apis/modelCategory/modelCategory.module';
 import { ModelCategory } from './apis/modelCategory/entities/modelCategory.entity';
 import { HighlightModule } from './apis/menu/highlight/highlight.module';
@@ -47,6 +47,8 @@ import { PhoneToken } from './apis/users/phone/phoneToken.entity';
 import { EmailModule } from './apis/users/email/email.module';
 import { DesignDetailDetailModule } from './apis/menu/design/detail/detail_detail/design_detail_detail.module';
 import { DesignDetailDetail } from './apis/menu/design/detail/detail_detail/design_detail_detail.entity';
+import { SpaceDetailDetailModule } from './apis/menu/space/detail/detail_detail/space_detail_detail.module';
+import { SpaceDetailDetail } from './apis/menu/space/detail/detail_detail/space_detail_detail.entity';
 
 @Module({
   imports: [
@@ -74,6 +76,7 @@ import { DesignDetailDetail } from './apis/menu/design/detail/detail_detail/desi
     VrDetailModule,
     SpaceModule,
     SpaceDetailModule,
+    SpaceDetailDetailModule,
     ConvenienceModule,
     ConvenienceDetailModule,
     SafetyModule,
@@ -104,6 +107,7 @@ import { DesignDetailDetail } from './apis/menu/design/detail/detail_detail/desi
         VrDetail,
         Space,
         SpaceDetail,
+        SpaceDetailDetail,
         Convenience,
         ConvenienceDetail,
         Safety,

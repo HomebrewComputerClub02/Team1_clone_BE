@@ -2,41 +2,14 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type User {
-  id: String!
-  email: String!
-  name: String!
-  phone: String!
-}
-
-type fetchUser {
-  email: String!
-  id: String!
-}
-
 type Convenience {
   id: String!
   summary: String!
 }
 
-type ConvenienceDetail {
-  id: String!
-  name: String!
-  summary: String!
-  img: String!
-  convenience: Convenience!
-}
-
 type Design {
   id: String!
   summary: String!
-}
-
-type DesignDetail {
-  id: String!
-  name: String!
-  img: String!
-  design: Design!
 }
 
 type Eco {
@@ -50,14 +23,6 @@ type Highlight {
   summary: String!
 }
 
-type HighlightDetail {
-  id: String!
-  name: String!
-  img: String!
-  description: String!
-  highlight: Highlight!
-}
-
 type HStation {
   id: String!
   summary: String!
@@ -67,15 +32,6 @@ type HStation {
 type Safety {
   id: String!
   summary: String!
-  img: String!
-}
-
-type SafetyDetail {
-  id: String!
-  name: String!
-  summary: String!
-  img: String!
-  safety: Safety!
 }
 
 type Service {
@@ -95,24 +51,9 @@ type Space {
   summary: String!
 }
 
-type SpaceDetail {
-  id: String!
-  name: String!
-  summary: String!
-  img: String!
-  space: Space!
-}
-
 type Vr {
   id: String!
   img: String!
-}
-
-type VrDetail {
-  id: String!
-  color_name: String!
-  color_code: String!
-  vr: Vr!
 }
 
 type ModelCategory {
@@ -138,6 +79,60 @@ type Model {
   service: Service!
   hStation: HStation!
   serviceNetwork: ServiceNetwork!
+  users: [User!]!
+}
+
+type User {
+  id: String!
+  email: String!
+  name: String!
+  phone: String!
+  models: [Model!]!
+}
+
+type ConvenienceDetail {
+  id: String!
+  name: String!
+  summary: String!
+  img: String!
+  convenience: Convenience!
+}
+
+type DesignDetail {
+  id: String!
+  name: String!
+  img: String!
+  design: Design!
+}
+
+type HighlightDetail {
+  id: String!
+  name: String!
+  img: String!
+  description: String!
+  highlight: Highlight!
+}
+
+type SafetyDetail {
+  id: String!
+  name: String!
+  summary: String!
+  img: String!
+  safety: Safety!
+}
+
+type SpaceDetail {
+  id: String!
+  name: String!
+  img: String!
+  space: Space!
+}
+
+type VrDetail {
+  id: String!
+  color_name: String!
+  color_code: String!
+  vr: Vr!
 }
 
 type DesignDetailDetail {
@@ -146,6 +141,14 @@ type DesignDetailDetail {
   summary: String
   img: String!
   designDetail: DesignDetail!
+}
+
+type SpaceDetailDetail {
+  id: String!
+  name: String!
+  summary: String
+  img: String!
+  spaceDetail: SpaceDetail!
 }
 
 type ModelOutput {
@@ -166,19 +169,27 @@ type ModelOutput {
   service: Service!
   hStation: HStation!
   serviceNetwork: ServiceNetwork!
+  users: [User!]!
   highlightDetails: [HighlightDetail!]!
   designDetails: [DesignDetail!]!
   designDetailDetails: [[DesignDetailDetail!]!]!
   vrDetails: [VrDetail!]!
   spaceDetails: [SpaceDetail!]!
+  spaceDetailDetails: [[SpaceDetailDetail!]!]!
   convenienceDetails: [ConvenienceDetail!]!
   safetyDetails: [SafetyDetail!]!
 }
 
+type ModelLikesOutput {
+  likesNum: Float!
+  isLiked: Boolean!
+}
+
 type Query {
-  fetchUser: fetchUser!
+  fetchUser: User!
   fetchModels: [Model!]!
   fetchModel(modelId: String!): ModelOutput!
+  getLikesNum(modelId: String!, userEmail: String): ModelLikesOutput!
   fetchHighlights: [Eco!]!
   fetchDesigns: [Design!]!
   fetchVrs: [Vr!]!
@@ -197,11 +208,13 @@ type Mutation {
   findId(phone: String!): String!
   resetPasswordByEmail: String!
   createModel(createModelInput: CreateModelInput!): Model!
+  likeAdd(modelId: String!): String!
   createHighlightDetail(createHighlightDetailInput: CreateHighlightDetailInput!): HighlightDetail!
   createDesignDetail(createDesignDetailInput: CreateDesignDetailInput!): DesignDetail!
   createDesignDetailDetail(createDesignDetailDetailInput: CreateDesignDetailDetailInput!): DesignDetailDetail!
   createVrDetail(createVrDetailInput: CreateVrDetailInput!): VrDetail!
   createSpaceDetail(createSpaceDetailInput: CreateSpaceDetailInput!): SpaceDetail!
+  createSpaceDetailDetail(createSpaceDetailDetailInput: CreateSpaceDetailDetailInput!): SpaceDetailDetail!
   createConvenienceDetail(createConvenienceDetailInput: CreateConvenienceDetailInput!): ConvenienceDetail!
   createSafetyDetail(createSafetyDetailInput: CreateSafetyDetailInput!): SafetyDetail!
   sendSMS(phone: String!): String!
@@ -255,7 +268,6 @@ input CreateConvenienceInput {
 
 input CreateSafetyInput {
   summary: String!
-  img: String!
 }
 
 input CreateServiceInput {
@@ -301,9 +313,15 @@ input CreateVrDetailInput {
 
 input CreateSpaceDetailInput {
   name: String!
-  summary: String!
   img: String!
   space_id: String!
+}
+
+input CreateSpaceDetailDetailInput {
+  name: String!
+  summary: String
+  img: String!
+  space_detail_id: String!
 }
 
 input CreateConvenienceDetailInput {

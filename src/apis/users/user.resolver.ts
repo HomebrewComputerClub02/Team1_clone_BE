@@ -1,7 +1,7 @@
 import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { UserService } from './user.service';
 import * as bcrypt from 'bcrypt';
-import { User } from './entities/user.entity';
+import { User } from './user.entity';
 import { Req, UseGuards } from '@nestjs/common/decorators';
 import { AuthGuard } from '@nestjs/passport';
 import { GqlAuthAccessGuard } from 'src/commons/auth/gql-auth.guard';
@@ -14,14 +14,23 @@ export class UserResolver {
     private readonly userService: UserService, //
   ) {}
 
+  // @UseGuards(GqlAuthAccessGuard)
+  // @Query(() => fetchUser)
+  // async fetchUser(
+  //   @CurrentUser() currentUser: any, //
+  // ) {
+  //   console.log('fetchUser 완료');
+  //   console.log('현재 유저 정보 :', currentUser);
+  //   return currentUser;
+  // }
+
   @UseGuards(GqlAuthAccessGuard)
-  @Query(() => fetchUser)
+  @Query(() => User)
   async fetchUser(
     @CurrentUser() currentUser: any, //
   ) {
-    console.log('fetchUser 완료');
-    console.log('현재 유저 정보 :', currentUser);
-    return currentUser;
+    const user = await this.userService.findOne({ email: currentUser.email });
+    return user;
   }
 
   @Mutation(() => User)

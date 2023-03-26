@@ -10,11 +10,11 @@ export class DesignDetailDetailResolver {
   ) {}
 
   @Mutation(() => DesignDetailDetail)
-  createDesignDetailDetail(
+  async createDesignDetailDetail(
     @Args('createDesignDetailDetailInput')
     createDesignDetailDetailInput: CreateDesignDetailDetailInput,
   ) {
-    return this.designDetailDetailService.createDetailDetail({
+    return await this.designDetailDetailService.createDetailDetail({
       createDesignDetailDetailInput,
     });
   }

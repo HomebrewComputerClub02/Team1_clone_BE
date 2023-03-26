@@ -1,5 +1,6 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 import { Field, GqlExecutionContext, ObjectType } from '@nestjs/graphql';
+import { Model } from 'src/apis/model/model.entity';
 
 @ObjectType()
 export class fetchUser {

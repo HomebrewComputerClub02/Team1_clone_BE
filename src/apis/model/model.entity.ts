@@ -10,7 +10,7 @@ import { ServiceNetwork } from 'src/apis/menu/serviceNetwork/serviceNetwork.enti
 import { Space } from 'src/apis/menu/space/space.entity';
 import { Vr } from 'src/apis/menu/vr/vr.entity';
 import { ModelCategory } from 'src/apis/modelCategory/entities/modelCategory.entity';
-import { User } from 'src/apis/users/entities/user.entity';
+import { User } from 'src/apis/users/user.entity';
 import {
   Column,
   Entity,
@@ -103,8 +103,8 @@ export class Model {
   @Field(() => ServiceNetwork)
   serviceNetwork: ServiceNetwork;
 
-  // @JoinTable()
-  // @ManyToMany(() => User, (users) => users.models)
-  // @Field(() => [User])
-  // users: User[];
+  @JoinTable()
+  @ManyToMany(() => User, (users) => users.models)
+  @Field(() => [User])
+  users: User[];
 }

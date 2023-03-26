@@ -11,8 +11,4 @@ export class Safety {
   @Column()
   @Field(() => String)
   summary: string;
-
-  @Column()
-  @Field(() => String)
-  img: string;
 }

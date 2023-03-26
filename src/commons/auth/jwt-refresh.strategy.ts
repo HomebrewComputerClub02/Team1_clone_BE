@@ -19,7 +19,7 @@ export class JwtRefreshStrategy extends PassportStrategy(
   }
 
   validate(payload) {
-    console.log('validate payload : ', payload); // { email: c@c.com, sub: qkwefuasdij-012093sd }
+    // console.log('validate payload : ', payload); // { email: c@c.com, sub: qkwefuasdij-012093sd }
     return {
       email: payload.email,
       id: payload.sub,

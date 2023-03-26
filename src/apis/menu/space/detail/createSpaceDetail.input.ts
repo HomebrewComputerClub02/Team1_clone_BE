@@ -6,9 +6,6 @@ export class CreateSpaceDetailInput {
   name: string;
 
   @Field(() => String)
-  summary: string;
-
-  @Field(() => String)
   img: string;
 
   @Field(() => String)

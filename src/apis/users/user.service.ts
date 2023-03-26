@@ -1,7 +1,7 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from './entities/user.entity';
+import { User } from './user.entity';
 
 @Injectable()
 export class UserService {
@@ -13,6 +13,7 @@ export class UserService {
   async findOne({ email }) {
     const user = await this.userRepository.findOne({
       where: { email },
+      relations: ['models'],
     });
     return user;
   }

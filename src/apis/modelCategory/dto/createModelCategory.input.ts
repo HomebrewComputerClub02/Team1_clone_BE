@@ -1,7 +1,7 @@
 import { Field, InputType, Int, OmitType } from '@nestjs/graphql';
 import { Min } from 'class-validator';
 import { ModelCategory } from 'src/apis/modelCategory/entities/modelCategory.entity';
-import { User } from 'src/apis/users/entities/user.entity';
+import { User } from 'src/apis/users/user.entity';
 
 @InputType()
 export class CreateModelCategoryInput {

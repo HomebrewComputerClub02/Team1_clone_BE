@@ -18,9 +18,10 @@ import { Space } from '../menu/space/space.entity';
 import { VrDetail } from '../menu/vr/detail/vr_detail.entity';
 import { Vr } from '../menu/vr/vr.entity';
 import { ModelCategory } from '../modelCategory/entities/modelCategory.entity';
-import { User } from '../users/entities/user.entity';
-import { Model } from './entities/model.entity';
+import { User } from '../users/user.entity';
+import { Model } from './model.entity';
 import { DesignDetailDetail } from '../menu/design/detail/detail_detail/design_detail_detail.entity';
+import { SpaceDetailDetail } from '../menu/space/detail/detail_detail/space_detail_detail.entity';
 
 @Injectable()
 export class ModelService {
@@ -76,6 +77,9 @@ export class ModelService {
     @InjectRepository(SpaceDetail)
     private readonly spaceDetailRepository: Repository<SpaceDetail>,
 
+    @InjectRepository(SpaceDetailDetail)
+    private readonly spaceDetailDetailRepository: Repository<SpaceDetailDetail>,
+
     @InjectRepository(ConvenienceDetail)
     private readonly convenienceDetailRepository: Repository<ConvenienceDetail>,
 
@@ -102,6 +106,7 @@ export class ModelService {
         'service',
         'hStation',
         'serviceNetwork',
+        'users',
       ], // 어떤 테이블 조인해올지 쓰면됨.
     });
   }
@@ -123,6 +128,7 @@ export class ModelService {
         'service',
         'hStation',
         'serviceNetwork',
+        'users',
       ], // 어떤 테이블 조인해올지 쓰면됨.
     });
 
@@ -162,6 +168,16 @@ export class ModelService {
       where: { space: { id: space_id } },
     });
 
+    // space 디테일 디테일
+    let spaceDetailDetails = [];
+    spaceDetails.forEach(async (spaceDetail) => {
+      const spaceDetailDetail = await this.spaceDetailDetailRepository.find({
+        where: { spaceDetail: { id: spaceDetail.id } },
+        relations: ['spaceDetail'],
+      });
+      spaceDetailDetails.push(spaceDetailDetail);
+    });
+
     // convenience 디테일
     const convenience_id = result_model.convenience.id;
     const convenienceDetails = await this.convenienceDetailRepository.find({
@@ -174,11 +190,6 @@ export class ModelService {
       where: { safety: { id: safety_id } },
     });
 
-    // console.log('designDetails : ', designDetails);
-    // console.log('designDetailDetails : ', designDetailDetails);
-
-    console.log('desginDetailDetails : ', designDetailDetails);
-
     const result_final = {
       ...result_model,
       highlightDetails,
@@ -186,6 +197,7 @@ export class ModelService {
       designDetailDetails,
       vrDetails,
       spaceDetails,
+      spaceDetailDetails,
       convenienceDetails,
       safetyDetails,
     };
@@ -299,6 +311,84 @@ export class ModelService {
 
     return result2;
   }
+
+  // ----------------------------------------
+  // likeList
+  // 좋아요 누르기
+
+  // 게시물 들어갔을 때,
+  // 좋아요 갯수 & 현재 유저가 좋아요 눌렀는지
+  async getLikesNum({ modelId, userEmail }) {
+    const model = await this.modelRepository.findOne({
+      where: { id: modelId },
+      relations: ['users'],
+    });
+
+    let isLiked = false;
+    model.users.forEach((eachUser) => {
+      if (eachUser.email === userEmail) {
+        isLiked = true;
+      }
+    });
+    const likesNum = model.users.length;
+
+    return { likesNum, isLiked };
+  }
+
+  // 좋아요 버튼 눌렀을 때,
+  // 좋아요 갯수 반영
+
+  async like({ userEmail, modelId }) {
+    // 유저, 모델 뽑아오기
+    const user = await this.userRepository.findOne({
+      where: { email: userEmail },
+      relations: ['models'],
+    });
+    const model = await this.modelRepository.findOne({
+      where: { id: modelId },
+      relations: ['users'],
+    });
+
+    // 좋아요 상태 체크
+    let check = false;
+    model.users.forEach((eachUser) => {
+      if (eachUser.id === user.id) {
+        check = true;
+      }
+    });
+
+    if (check) {
+      // 좋아요 눌린 상태
+      const newUserModels = user.models.filter(
+        (element) => element.id !== model.id,
+      );
+      const newModelUsers = model.users.filter(
+        (element) => element.id !== user.id,
+      );
+      const newModel = {
+        ...model,
+        users: newModelUsers,
+      };
+      const newUser = {
+        ...user,
+        models: newUserModels,
+      };
+
+      await this.userRepository.save(newUser);
+      await this.modelRepository.save(newModel);
+    } else {
+      // 좋아요 안눌린 상태
+      user.models.push(model);
+      model.users.push(user);
+      await this.userRepository.save(user);
+      await this.modelRepository.save(model);
+    }
+
+    return `좋아요 추가 완료 / user:${user} model:${model}`;
+  }
+
+  // likesNum
+  // 좋아요 리스트 배열의 길이를 리턴
 
   // async create({ createModelInput }) {
   //   // 1. 상품만 등록하는 경우

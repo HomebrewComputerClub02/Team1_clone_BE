@@ -17,11 +17,12 @@ import { Space } from '../menu/space/space.entity';
 import { VrDetail } from '../menu/vr/detail/vr_detail.entity';
 import { Vr } from '../menu/vr/vr.entity';
 import { ModelCategory } from '../modelCategory/entities/modelCategory.entity';
-import { User } from '../users/entities/user.entity';
-import { Model } from './entities/model.entity';
+import { User } from '../users/user.entity';
+import { Model } from './model.entity';
 import { ModelResolver } from './model.resolver';
 import { ModelService } from './model.service';
 import { DesignDetailDetail } from '../menu/design/detail/detail_detail/design_detail_detail.entity';
+import { SpaceDetailDetail } from '../menu/space/detail/detail_detail/space_detail_detail.entity';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { DesignDetailDetail } from '../menu/design/detail/detail_detail/design_d
       VrDetail,
       Space,
       SpaceDetail,
+      SpaceDetailDetail,
       Convenience,
       ConvenienceDetail,
       Safety,

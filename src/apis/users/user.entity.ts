@@ -1,5 +1,5 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { Model } from 'src/apis/model/entities/model.entity';
+import { Model } from 'src/apis/model/model.entity';
 import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
@@ -28,6 +28,10 @@ export class User {
   @Column()
   //   @Field(() => String)
   simplePw: string;
+
+  @ManyToMany(() => Model, (models) => models.users)
+  @Field(() => [Model])
+  models: Model[];
 
   // @ManyToMany(() => Model, (models) => models.users)
   // @Field(() => [Model])

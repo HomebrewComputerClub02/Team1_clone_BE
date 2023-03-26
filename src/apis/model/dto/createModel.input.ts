@@ -13,7 +13,7 @@ import { CreateSpaceInput } from 'src/apis/menu/space/createSpace.input';
 import { CreateVrInput } from 'src/apis/menu/vr/createVr.input';
 import { CreateModelCategoryInput } from 'src/apis/modelCategory/dto/createModelCategory.input';
 import { ModelCategory } from 'src/apis/modelCategory/entities/modelCategory.entity';
-import { User } from 'src/apis/users/entities/user.entity';
+import { User } from 'src/apis/users/user.entity';
 
 @InputType()
 export class CreateModelInput {
